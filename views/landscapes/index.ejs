@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+<div class="cover">
+    <div class="cover_caption">
+        <h1>View Amazing Landscapes From All Over The World</h1>
+        <a href="/landscapes/new" class="btn btn-lg btn-primary">Add a Landscape</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row text-center">
+        <% landscapes.forEach(function(landscape){ %>
+        <div class="col-md-4 col-sm-6">
+            <div class="thumbnail">
+                <img class="card_image" src="<%=landscape.image%>">
+                <div class="caption">
+                    <h4><%=landscape.name%></h4>
+                    <a href="/landscapes/<%=landscape._id%>"class="btn btn-primary">More Info</a>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+    </div>
+</div>
+
+
+
+
+
+
+<% include ../partials/footer %>
