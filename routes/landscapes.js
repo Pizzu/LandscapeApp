@@ -39,12 +39,53 @@ router.post("/landscapes", function(req, res){
 });
 //SHOW PAGE
 router.get("/landscapes/:id", function(req, res) {
-   Landscape.findById(req.params.id, function(err, foundLandscape){
+   Landscape.findById(req.params.id).populate("comments").exec(function(err, foundLandscape){
        if(err || !foundLandscape){
            req.flash("error", "Landscape not found!");
            res.redirect("/landscapes");
        } else {
            res.render("landscapes/show", {landscape: foundLandscape});
+       }
+   }); 
+});
+
+//EDIT PAGE
+router.get("/landscapes/:id/edit", function(req, res) {
+   Landscape.findById(req.params.id, function(err, foundLandscape){
+      if(err){
+          req.flash("error", "Landscape not found!");
+          res.redirect("/landscapes/" + req.params.id);
+      } else {
+          res.render("landscapes/edit", {landscape: foundLandscape});
+      }
+   }); 
+});
+
+//PUT
+router.put("/landscapes/:id", function(req, res){
+    var landscapeObj = {
+            name: req.body.name,
+            image: req.body.image,
+            description: req.body.description
+    };
+    Landscape.findByIdAndUpdate(req.params.id,{$set: landscapeObj},function(err, updatedLandscape){
+       if(err){
+           req.flash("error", "Something went wrong");
+           res.redirect("/landscapes/" + req.params.id);
+       } else {
+           res.redirect("/landscapes/" + req.params.id);
+       }
+    });
+});
+
+//DESTROY ROUTE
+router.delete("/landscapes/:id", function(req, res){
+   Landscape.findByIdAndRemove(req.params.id, function(err){
+       if(err){
+           req.flash("error", "Something went wrong");
+           res.redirect("/landscapes/" + req.params.id);
+       } else {
+           res.redirect("/landscapes");
        }
    }); 
 });

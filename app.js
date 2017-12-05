@@ -10,10 +10,11 @@ var express     = require("express"),
     
 //requiring routes
 var landscapeRoutes = require("./routes/landscapes");
+var commentRoutes   = require("./routes/comments");
 
 //mongoose setup
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/landscapedb_v1", {useMongoClient: true});
+mongoose.connect("mongodb://localhost/landscapedb_v2", {useMongoClient: true});
 
 //Other setups
 app.use(express.static(__dirname + "/public"));
@@ -22,7 +23,10 @@ app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
 
+
 app.use(landscapeRoutes);
+app.use(commentRoutes);
+
 
 
 //=================================

@@ -82,6 +82,10 @@ html,body{
     width: 30%;
     margin: 25px auto;
 }
+/*DELETE BUTTON */
+.delete_form{
+   display: inline-block; 
+}
 *,
 *:before,
 *:after{

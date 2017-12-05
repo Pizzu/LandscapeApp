@@ -2,17 +2,14 @@
 <div class="container">
     <div class="row">
         <div class="box_forms">
-        <h1 class="title_forms">Create a new Landscape</h1>
+        <h1 class="title_forms">Add a New Comment</h1>
         <div class="content_forms">
-        <form action="/landscapes" method="POST">
+        <form action="/landscapes/<%=landscape._id%>/comments" method="POST">
             <div class="form-group">
-                <input class="form-control" type= "text" placeholder= "name" name="name">
+                <input class="form-control" type= "text" placeholder= "text" name="text">
             </div>
             <div class="form-group">
-                <input class="form-control" type= "text" placeholder= "image" name="image">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type= "text" placeholder= "description" name="description">
+                <input class="form-control" type= "text" placeholder= "author" name="author">
             </div>
             <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block">Submit!</button>
