@@ -7,10 +7,13 @@
                 <div class="caption">
                      <h4><%=landscape.name%></h4>
                      <p><%=landscape.description%></p> 
+                     <p><em>Submitted By <%=landscape.author.nameUser%></em></p>
+                     <% if(currentUser && landscape.author.id.equals(currentUser._id)){ %>
                      <a href="/landscapes/<%=landscape._id%>/edit" class="btn btn-warning">Edit</a>
                      <form class="delete_form" action="/landscapes/<%=landscape._id%>?_method=DELETE" method="POST">
                          <button class="btn btn-danger">Delete</button>
                      </form>
+                     <% }; %>
                 </div>
             </div>
              <div class="well">
@@ -21,13 +24,15 @@
                 <% landscape.comments.forEach(function(comment){ %>
                 <div class="row">
                     <div class="col-md-12">
-                        <strong><%=comment.author%></strong>
+                        <strong><%=comment.author.nameUser%></strong>
                         <span class="pull-right">Date</span>
                         <p><%=comment.text%></p>
+                         <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                         <a href="/landscapes/<%=landscape._id%>/comments/<%=comment._id%>/edit"class="btn btn-xs btn-warning">Edit</a>
                         <form class="delete_form" action="/landscapes/<%=landscape._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                             <button class="btn btn-xs btn-danger">Delete</button>
                         </form>
+                        <% } %>
                         <hr>
                     <% }); %>
                     </div>

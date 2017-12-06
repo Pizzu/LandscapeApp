@@ -73,7 +73,7 @@ html,body{
 
 /*FORM STYLING */
 .box_forms{
-    margin-top: 90px;
+    margin-top: 115px;
 }
 .title_forms{
     text-align: center;
@@ -86,6 +86,16 @@ html,body{
 .delete_form{
    display: inline-block; 
 }
+/*ALERT STYLING */
+.pos_alert{
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    top: 51px;
+    
+}
+
+
 *,
 *:before,
 *:after{

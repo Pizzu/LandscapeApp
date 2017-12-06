@@ -1,0 +1,23 @@
+<% include partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="box_forms">
+        <h1 class="title_forms">Login</h1>
+        <div class="content_forms">
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <input class="form-control" type= "email" placeholder= "email" name="username">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type= "password" placeholder= "password" name="password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<% include partials/footer %>
