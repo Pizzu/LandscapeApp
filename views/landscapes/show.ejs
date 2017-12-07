@@ -7,7 +7,7 @@
                 <div class="caption">
                      <h4><%=landscape.name%></h4>
                      <p><%=landscape.description%></p> 
-                     <p><em>Submitted By <%=landscape.author.nameUser%></em></p>
+                     <p><em>Submitted By <%=landscape.author.nameUser%>, <%=moment(landscape.createdAt).fromNow()%></em></p>
                      <% if(currentUser && landscape.author.id.equals(currentUser._id)){ %>
                      <a href="/landscapes/<%=landscape._id%>/edit" class="btn btn-warning">Edit</a>
                      <form class="delete_form" action="/landscapes/<%=landscape._id%>?_method=DELETE" method="POST">
@@ -16,6 +16,7 @@
                      <% }; %>
                 </div>
             </div>
+            <!-- Comment Section Start -->
              <div class="well">
                 <div class="text-right">
                    <a class="btn btn-primary" href="/landscapes/<%=landscape._id%>/comments/new">Add New Comment</a>
@@ -25,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <strong><%=comment.author.nameUser%></strong>
-                        <span class="pull-right">Date</span>
+                        <span class="pull-right"><%=moment(comment.createdAt).fromNow()%></span>
                         <p><%=comment.text%></p>
                          <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                         <a href="/landscapes/<%=landscape._id%>/comments/<%=comment._id%>/edit"class="btn btn-xs btn-warning">Edit</a>
@@ -34,11 +35,43 @@
                         </form>
                         <% } %>
                         <hr>
-                    <% }); %>
                     </div>
                 </div>
+                <% }); %>
             </div>
+        </div>
+         <div class="col-md-4">
+            <div id="map"></div>
+         </div>
     </div>
 </div>
+
+<script>
+  function initMap() {
+    var lat = <%= landscape.lat %>;
+    var lng = <%= landscape.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= landscape.name %><br />
+      <%= landscape.location %></strong>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLVxO8sOoVLFotztSt3rI23KkYyjuZCgo&callback=initMap"async defer></script>
 
 <% include ../partials/footer %>

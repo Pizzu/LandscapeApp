@@ -18,7 +18,7 @@ var indexRoutes     = require("./routes/index");
 
 //mongoose setup
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/landscapedb_v3", {useMongoClient: true});
+mongoose.connect("mongodb://localhost/landscapedb_v4", {useMongoClient: true});
 
 //Other setups
 app.use(express.static(__dirname + "/public"));
@@ -26,6 +26,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(flash());
+
+//MOMENT JS
+app.locals.moment = require("moment");
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({

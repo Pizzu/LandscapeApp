@@ -2,6 +2,7 @@ var express = require("express");
 var router  = express.Router();
 var Landscape = require("../models/landscape");
 var middleware = require("../middleware");
+var geocoder = require("geocoder");
 
 
 //=================================
@@ -31,7 +32,17 @@ router.post("/landscapes", middleware.isLoggedIn, function(req, res){
         id: req.user.id,
         nameUser: req.user.nameUser 
     };
-   var newLandscape = {name:name, image:image, description:description, author: author};
+    geocoder.geocode(req.body.location, function(err, data){
+        if(err){
+            req.flash("error", "Something went wrong");
+            res.redirect("/landscapes");
+        }
+        if(data && data.results && data.results.length){
+            var lat = data.results[0].geometry.location.lat;
+            var lng = data.results[0].geometry.location.lng;
+            var location = data.results[0].formatted_address;
+        }
+   var newLandscape = {name:name, image:image, location: location, lat: lat, lng: lng, description:description, author: author};
    Landscape.create(newLandscape, function(err, landscape){
       if(err){
           req.flash("error", "Something went wrong!");
@@ -41,6 +52,7 @@ router.post("/landscapes", middleware.isLoggedIn, function(req, res){
           res.redirect("/landscapes");
       }
    });
+  });
 });
 //SHOW PAGE
 router.get("/landscapes/:id", function(req, res) {
@@ -73,6 +85,16 @@ router.put("/landscapes/:id", middleware.checkLandscapeOwnership, function(req, 
             image: req.body.image,
             description: req.body.description
     };
+    geocoder.geocode(req.body.location, function(err, data){
+        if(err){
+            req.flash("error", "Something went wrong");
+            res.redirect("/landscapes");  
+        }
+        if(data && data.results && data.results.length){
+            landscapeObj.lat = data.results[0].geometry.location.lat;
+            landscapeObj.lng = data.results[0].geometry.location.lng;
+            landscapeObj.location = data.results[0].formatted_address;
+        }
     Landscape.findByIdAndUpdate(req.params.id,{$set: landscapeObj},function(err, updatedLandscape){
        if(err){
            req.flash("error", "Something went wrong");
@@ -80,6 +102,7 @@ router.put("/landscapes/:id", middleware.checkLandscapeOwnership, function(req, 
        } else {
            res.redirect("/landscapes/" + req.params.id);
        }
+      });
     });
 });
 

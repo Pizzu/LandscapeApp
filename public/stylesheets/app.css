@@ -94,7 +94,12 @@ html,body{
     top: 51px;
     
 }
-
+/* MAP */
+#map{
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+}
 
 *,
 *:before,
