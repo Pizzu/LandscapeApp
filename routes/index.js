@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Landscape = require("../models/landscape");
 
 //=================================
 //          AUTH ROUTES
@@ -45,6 +46,24 @@ router.get("/logout", function(req, res) {
     req.logout();
     req.flash("success", "Logged you out!");
     res.redirect("/landscapes");
+});
+
+//User Profile
+router.get("/users/:id", function(req, res) {
+   User.findById(req.params.id, function(err, foundUser){
+      if(err || !foundUser){
+          req.flash("error", "Something went wrong");
+          res.redirect("/landscapes");
+      } else {
+          Landscape.find().where("author.id").equals(foundUser._id).exec(function(err, allLandscapes){
+             if(err){
+                 req.flash("error", "Something went wrong");
+                 res.redirect("/landscapes");
+             }
+             res.render("users/show", {user: foundUser, landscapes: allLandscapes});
+          });
+      }
+   }); 
 });
 
 //Esportazione router
