@@ -4,12 +4,26 @@ var Landscape = require("../models/landscape");
 var middleware = require("../middleware");
 var geocoder = require("geocoder");
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 //=================================
 //        LANDSCAPE ROUTES
 //=================================
 //INDEX
 router.get("/landscapes", function(req, res){
+    if(req.query.search){
+      const regex = new RegExp(escapeRegex(req.query.search),'gi');//mi permette che la ricerca non badi a lettere minuscole o maiuscole e altre cose
+      Landscape.find({name:regex}, function(err, allLandscapes){
+           if(err){
+               req.flash("error", "Something went wrong!");
+               res.redirect("/landscapes");
+           } else {
+               res.render("landscapes/index",{landscapes: allLandscapes}); 
+           }
+       });
+    } else {
     Landscape.find({}, function(err,allLandscapes){
         if(err){
             req.flash("error", "Something went wrong!");
@@ -18,6 +32,7 @@ router.get("/landscapes", function(req, res){
             res.render("landscapes/index", {landscapes: allLandscapes});
         }
     });
+    }
 });
 //NEW
 router.get("/landscapes/new", middleware.isLoggedIn, function(req, res){
