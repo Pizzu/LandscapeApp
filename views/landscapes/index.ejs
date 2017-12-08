@@ -8,6 +8,9 @@
 </div>
 <div class="container">
     <div class="row text-center">
+        <%if(landscapes.length === 0){ %>
+        <div class="col-md-12"><h3>Sorry no landscapes found...</h3></div>
+      <% } %>
         <% landscapes.forEach(function(landscape){ %>
         <div class="col-md-4 col-sm-6">
             <div class="thumbnail">
