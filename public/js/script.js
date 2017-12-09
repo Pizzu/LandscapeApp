@@ -1,6 +1,6 @@
 /* global $ */
 $(document).ready(function(){
-   $(".alert").delay(4000).fadeOut(4000, function(){
+   $(".alert").delay(2000).fadeOut(3000, function(){
        $(this).remove();
    }); 
 });
