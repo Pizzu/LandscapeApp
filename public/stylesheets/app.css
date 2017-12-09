@@ -88,6 +88,7 @@ html,body{
 }
 /*ALERT STYLING */
 .pos_alert{
+    text-align: center;
     position: fixed;
     z-index: 1;
     width: 100%;
