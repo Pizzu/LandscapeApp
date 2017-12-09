@@ -1,6 +1,11 @@
 html,body{
     height: 100%;
     background-color: #eee;
+    font-family: "Lato", sans-serif;
+}
+/*General*/
+h1{
+    font-size: 40px;
 }
 /*NAVBAR STYLING*/
 .navbar{
@@ -100,6 +105,7 @@ html,body{
   width: 100%;
   height: 400px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 *,

@@ -1,10 +1,10 @@
 <% include ../partials/header %>
 <div class="container">
     <div class="row text-center" style="margin-top:70px;">
-        <h2><%=user.nameUser%></h2>
+        <h1><%=user.nameUser%></h1>
         <em><%=user.username%></em>
     </div>
-    <h4><%=landscapes.length%> Landscapes</h4>
+    <h3><%=landscapes.length%> Landscapes</h3>
     <!--Display all the landscapes of the user -->
     <div class="row text-center">
     <% landscapes.forEach(function(landscape){ %>
@@ -12,7 +12,7 @@
             <div class="thumbnail">
                 <img class="card_image" src="<%=landscape.image%>">
                 <div class="caption">
-                    <h4><%=landscape.name%></h4>
+                    <h4><strong><%=landscape.name%></strong></h4>
                     <a href="/landscapes/<%=landscape._id%>"class="btn btn-primary">More Info</a>
                 </div>
             </div>

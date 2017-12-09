@@ -5,7 +5,7 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%=landscape.image%>"></img>
                 <div class="caption">
-                     <h4><%=landscape.name%></h4>
+                     <h4><strong><%=landscape.name%></strong></h4>
                      <p><%=landscape.description%></p> 
                      <p><em>Submitted By <a href="/users/<%=landscape.author.id%>"><%=landscape.author.nameUser%></a>, <%=moment(landscape.createdAt).fromNow()%></em></p>
                      <% if(currentUser && landscape.author.id.equals(currentUser._id)){ %>
