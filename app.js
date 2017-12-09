@@ -18,7 +18,8 @@ var indexRoutes     = require("./routes/index");
 
 //mongoose setup
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/landscapedb_v4", {useMongoClient: true});
+var url = process.env.DATABASEURL || "mongodb://localhost/landscapedb_v4";
+mongoose.connect(url, {useMongoClient: true});
 
 //Other setups
 app.use(express.static(__dirname + "/public"));
