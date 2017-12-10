@@ -36,7 +36,7 @@ app.use(require("express-session")({
     secret: "I love dogs and coding all day",
     resave : false,
     saveUninitialized: false,
-    cookie: {maxAge:60000}
+    cookie: {maxAge:86400000}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
