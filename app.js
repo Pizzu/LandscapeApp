@@ -35,7 +35,8 @@ app.locals.moment = require("moment");
 app.use(require("express-session")({
     secret: "I love dogs and coding all day",
     resave : false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {maxAge:60000}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
