@@ -6,19 +6,19 @@ var geocoder = require("geocoder");
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
+}
 
 //=================================
 //        LANDSCAPE ROUTES
 //=================================
 //INDEX
-router.get("/landscapes", function(req, res){
+router.get("/", function(req, res){
     if(req.query.search){
       const regex = new RegExp(escapeRegex(req.query.search),'gi');//mi permette che la ricerca non badi a lettere minuscole o maiuscole e altre cose
       Landscape.find({name:regex}, function(err, allLandscapes){
            if(err){
                req.flash("error", "Something went wrong!");
-               res.redirect("/landscapes");
+               res.redirect("/");
            } else {
                res.render("landscapes/index",{landscapes: allLandscapes}); 
            }
@@ -27,7 +27,7 @@ router.get("/landscapes", function(req, res){
     Landscape.find({}, function(err,allLandscapes){
         if(err){
             req.flash("error", "Something went wrong!");
-            res.redirect("/landscapes");
+            res.redirect("/");
         } else {
             res.render("landscapes/index", {landscapes: allLandscapes});
         }
@@ -50,7 +50,7 @@ router.post("/landscapes", middleware.isLoggedIn, function(req, res){
     geocoder.geocode(req.body.location, function(err, data){
         if(err){
             req.flash("error", "Something went wrong");
-            res.redirect("/landscapes");
+            res.redirect("/");
         }
         if(data && data.results && data.results.length){
             var lat = data.results[0].geometry.location.lat;
@@ -61,10 +61,10 @@ router.post("/landscapes", middleware.isLoggedIn, function(req, res){
    Landscape.create(newLandscape, function(err, landscape){
       if(err){
           req.flash("error", "Something went wrong!");
-          res.redirect("/landscapes");
+          res.redirect("/");
       } else {
           console.log(landscape);
-          res.redirect("/landscapes");
+          res.redirect("/");
       }
    });
   });
@@ -74,7 +74,7 @@ router.get("/landscapes/:id", function(req, res) {
    Landscape.findById(req.params.id).populate("comments").exec(function(err, foundLandscape){
        if(err || !foundLandscape){
            req.flash("error", "Landscape not found!");
-           res.redirect("/landscapes");
+           res.redirect("/");
        } else {
            res.render("landscapes/show", {landscape: foundLandscape});
        }
@@ -103,7 +103,7 @@ router.put("/landscapes/:id", middleware.checkLandscapeOwnership, function(req, 
     geocoder.geocode(req.body.location, function(err, data){
         if(err){
             req.flash("error", "Something went wrong");
-            res.redirect("/landscapes");  
+            res.redirect("/");  
         }
         if(data && data.results && data.results.length){
             landscapeObj.lat = data.results[0].geometry.location.lat;
@@ -128,7 +128,7 @@ router.delete("/landscapes/:id", middleware.checkLandscapeOwnership, function(re
            req.flash("error", "Something went wrong");
            res.redirect("/landscapes/" + req.params.id);
        } else {
-           res.redirect("/landscapes");
+           res.redirect("/");
        }
    }); 
 });

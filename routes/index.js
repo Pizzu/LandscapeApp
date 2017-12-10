@@ -23,7 +23,7 @@ router.post("/register", function(req, res){
       } else {
           passport.authenticate("local")(req, res, function(){
              req.flash("success", "Welcome " + user.nameUser);
-             res.redirect("/landscapes");
+             res.redirect("/");
           });
       }
    });
@@ -36,7 +36,7 @@ router.get("/login", function(req, res){
 
 //handle login logic
 router.post("/login", passport.authenticate("local",{
-    successRedirect: "/landscapes",
+    successRedirect: "/",
     failureRedirect: "/login",
     failureFlash: true
 }));
@@ -45,7 +45,7 @@ router.post("/login", passport.authenticate("local",{
 router.get("/logout", function(req, res) {
     req.logout();
     req.flash("success", "Logged you out!");
-    res.redirect("/landscapes");
+    res.redirect("/");
 });
 
 //User Profile
@@ -53,12 +53,12 @@ router.get("/users/:id", function(req, res) {
    User.findById(req.params.id, function(err, foundUser){
       if(err || !foundUser){
           req.flash("error", "Something went wrong");
-          res.redirect("/landscapes");
+          res.redirect("/");
       } else {
           Landscape.find().where("author.id").equals(foundUser._id).exec(function(err, allLandscapes){
              if(err){
                  req.flash("error", "Something went wrong");
-                 res.redirect("/landscapes");
+                 res.redirect("/");
              }
              res.render("users/show", {user: foundUser, landscapes: allLandscapes});
           });

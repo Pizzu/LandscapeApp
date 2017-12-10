@@ -16,7 +16,7 @@ middlewareObj.checkLandscapeOwnership = function(req, res, next){
          Landscape.findById(req.params.id, function(err, foundLandscape){
            if(err || !foundLandscape){
                req.flash("error", "Landscape not found!");
-               res.redirect("/landscapes");
+               res.redirect("/");
            } else {
                if(foundLandscape.author.id.equals(req.user._id)){//metodo di mongoose(author.id è un oggetto non una stringa)
                     next();
@@ -37,13 +37,13 @@ middlewareObj.checkCommentOwnership = function(req, res, next){
     Comment.findById(req.params.comment_id, function(err, foundComment) {
         if(err || !foundComment){
           req.flash("error", "Something went wrong!");
-          res.redirect("/landscapes");        
+          res.redirect("/");        
         } else {
           if(foundComment.author.id.equals(req.user._id)){
             next();
           } else {
              req.flash("error", "You don't have permission to do that!");
-             res.redirect("/landscapes");      
+             res.redirect("/");      
           }
         }
     });
