@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var Landscape = require("../models/landscape");
+var middleware = require("../middleware");
 
 //=================================
 //          AUTH ROUTES
@@ -42,7 +43,7 @@ router.post("/login", passport.authenticate("local",{
 }));
 
 //logout logic
-router.get("/logout", function(req, res) {
+router.get("/logout", middleware.isLoggedIn, function(req, res) {
     req.logout();
     req.flash("success", "Logged you out!");
     res.redirect("/");

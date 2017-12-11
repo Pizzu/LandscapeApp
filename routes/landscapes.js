@@ -13,7 +13,6 @@ function escapeRegex(text) {
 //=================================
 //INDEX
 router.get("/", function(req, res){
-    console.log(req.session);
     if(req.query.search){
       const regex = new RegExp(escapeRegex(req.query.search),'gi');//mi permette che la ricerca non badi a lettere minuscole o maiuscole e altre cose
       Landscape.find({name:regex}, function(err, allLandscapes){
