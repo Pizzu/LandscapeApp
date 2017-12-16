@@ -14,7 +14,11 @@
         <% landscapes.forEach(function(landscape){ %>
         <div class="col-md-4 col-sm-6">
             <div class="thumbnail">
+                <div class="dark">
+                <a href="/landscapes/<%=landscape._id%>">
                 <img class="card_image" src="<%=landscape.image%>">
+                </a>
+                </div>
                 <div class="caption">
                     <h4><strong><%=landscape.name%></strong></h4>
                     <a href="/landscapes/<%=landscape._id%>"class="btn btn-primary">More Info</a>
